@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname));
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
@@ -41,7 +41,7 @@ Respond ONLY with a valid JSON object, no markdown, no backticks, no preamble. U
   "tags": ["tag1", "tag2", "tag3", "tag4"]
 }
 
-The recommendation array should have exactly 3 paragraph strings — rich, personal, literary. Focus on emotional texture, what kind of reader it suits, and a specific detail connecting it to what the reader loved. Warm and specific, not blurby.`;
+The recommendation array should have exactly 3 paragraph strings â€” rich, personal, literary. Focus on emotional texture, what kind of reader it suits, and a specific detail connecting it to what the reader loved. Warm and specific, not blurby.`;
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -76,7 +76,7 @@ The recommendation array should have exactly 3 paragraph strings — rich, perso
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
