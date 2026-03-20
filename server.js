@@ -1,11 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const fs = require('fs');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.static('/app'));
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
@@ -13,19 +13,6 @@ if (!ANTHROPIC_API_KEY) {
   console.error('ERROR: ANTHROPIC_API_KEY environment variable is not set.');
   process.exit(1);
 }
-
-// Debug: log where we are and what files exist
-console.log('__dirname:', __dirname);
-console.log('cwd:', process.cwd());
-try {
-  console.log('files in cwd:', fs.readdirSync(process.cwd()).join(', '));
-} catch(e) {
-  console.log('could not read cwd');
-}
-
-// Serve static files from current working directory
-const staticDir = process.cwd();
-app.use(express.static(staticDir));
 
 app.post('/api/recommend', async (req, res) => {
   const { book, mood, open, excluded = [] } = req.body;
@@ -71,7 +58,7 @@ The recommendation array should have exactly 3 paragraph strings â€” rich, 
       })
     });
 
-    if (!response.ok) {
+    if (!res.ok) {
       const err = await response.json();
       return res.status(502).json({ error: err.error?.message || 'API error' });
     }
@@ -89,9 +76,7 @@ The recommendation array should have exactly 3 paragraph strings â€” rich, 
 });
 
 app.get('*', (req, res) => {
-  const indexPath = path.join(process.cwd(), 'index.html');
-  console.log('Serving index from:', indexPath);
-  res.sendFile(indexPath);
+  res.sendFile('/app/index.html');
 });
 
 const PORT = process.env.PORT || 3000;
