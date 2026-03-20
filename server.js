@@ -41,7 +41,7 @@ Respond ONLY with a valid JSON object, no markdown, no backticks, no preamble. U
   "tags": ["tag1", "tag2", "tag3", "tag4"]
 }
 
-The recommendation array should have exactly 3 paragraph strings â€” rich, personal, literary. Focus on emotional texture, what kind of reader it suits, and a specific detail connecting it to what the reader loved. Warm and specific, not blurby.`;
+The recommendation array should have exactly 3 paragraph strings - rich, personal, literary. Focus on emotional texture, what kind of reader it suits, and a specific detail connecting it to what the reader loved. Warm and specific, not blurby.`;
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -58,7 +58,7 @@ The recommendation array should have exactly 3 paragraph strings â€” rich, 
       })
     });
 
-    if (!res.ok) {
+    if (!response.ok) {
       const err = await response.json();
       return res.status(502).json({ error: err.error?.message || 'API error' });
     }
