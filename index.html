@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For My Waffles — A Reading Companion</title>
+  <meta name="description" content="Tell us about a book you loved. We'll find what comes next.">
+  <meta property="og:title" content="For My Waffles">
+  <meta property="og:description" content="A literary reading companion. Tell us about a book you loved.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/">For My Waffles</a>
+  <div class="nav-links">
+    <a href="/" class="active">Read</a>
+    <a href="/about.html">About</a>
+  </div>
+</nav>
+
+<main>
+  <div class="masthead">
+    <div class="masthead-kicker">A reading companion</div>
+    <h1>For My Waffles</h1>
+    <p class="masthead-sub">Tell us about a book that stayed with you. We'll find what comes next.</p>
+  </div>
+
+  <div class="container">
+    <div class="form-section">
+      <label class="form-label" for="bookInput">A book you loved</label>
+      <textarea
+        id="bookInput"
+        placeholder="Describe a book that moved you — what you loved about it, how it made you feel, a character or line you can't forget…"
+        rows="5"
+      ></textarea>
+
+      <div class="form-row">
+        <div>
+          <label class="form-label" for="moodSelect">Mood</label>
+          <select id="moodSelect">
+            <option value="">Any mood</option>
+            <option value="contemplative and slow-burning">Contemplative & slow-burning</option>
+            <option value="immersive and emotionally intense">Immersive & intense</option>
+            <option value="warm and character-driven">Warm & character-driven</option>
+            <option value="dark and unsettling">Dark & unsettling</option>
+            <option value="epic and sweeping">Epic & sweeping</option>
+            <option value="quiet and introspective">Quiet & introspective</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label" for="openSelect">Open to</label>
+          <select id="openSelect">
+            <option value="literary fiction and narrative non-fiction">Anything literary</option>
+            <option value="literary fiction only">Fiction only</option>
+            <option value="narrative non-fiction and history">Non-fiction & history</option>
+            <option value="short stories and novellas">Short stories & novellas</option>
+            <option value="international and translated literature">Translated & international</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-find" id="findBtn" onclick="findRecommendation()">
+        Find my next book →
+      </button>
+    </div>
+
+    <div id="loading">
+      <div class="loading-line"></div>
+      <p class="loading-text">Searching the shelves…</p>
+    </div>
+
+    <p class="error-msg" id="errorMsg"></p>
+
+    <div id="result">
+      <div class="result-rule">Recommended</div>
+      <div id="recContent"></div>
+      <div class="result-actions">
+        <div class="result-actions-left">
+          <button class="btn-ghost" onclick="findAnother()">Another recommendation →</button>
+        </div>
+        <div class="result-actions-right">
+          <button class="btn-ghost" id="shareBtn" onclick="shareRec()">Share ↗</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="history-section" id="historySection">
+      <div class="history-header">
+        <h2>Your reading history</h2>
+        <button class="btn-ghost" onclick="clearHistory()" style="font-size:10px;">Clear all</button>
+      </div>
+      <div id="historyList"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span class="footer-brand">For My Waffles</span>
+  <span class="footer-note">Powered by Claude · Every recommendation hand-considered</span>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

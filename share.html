@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A recommendation — For My Waffles</title>
+  <meta name="description" content="Someone shared a book recommendation with you.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/">For My Waffles</a>
+  <div class="nav-links">
+    <a href="/">Read</a>
+    <a href="/about.html">About</a>
+  </div>
+</nav>
+
+<main>
+  <div class="masthead">
+    <div class="masthead-kicker">Shared recommendation</div>
+    <h1 id="shareTitle">—</h1>
+    <p class="masthead-sub" id="shareAuthor"></p>
+  </div>
+
+  <div class="container">
+    <div id="shareContent"></div>
+
+    <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--paper-rule); display:flex; gap: 1.5rem; flex-wrap: wrap;">
+      <a href="/" class="btn-find" style="text-decoration: none; display: inline-flex; align-items: center; gap: 10px;">
+        Get your own recommendation →
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span class="footer-brand">For My Waffles</span>
+  <span class="footer-note">Powered by Claude · Every recommendation hand-considered</span>
+</footer>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+
+  const title = params.get('title') || 'A recommendation';
+  const author = params.get('author') || '';
+  const year = params.get('year') || '';
+  const book = params.get('book') || '';
+  const tags = (params.get('tags') || '').split(',').filter(Boolean);
+  const paras = [params.get('p0'), params.get('p1'), params.get('p2')].filter(Boolean);
+
+  document.title = `${title} — For My Waffles`;
+  document.getElementById('shareTitle').textContent = title;
+  document.getElementById('shareAuthor').textContent = author
+    ? `${author}${year ? ` (${year})` : ''}`
+    : '';
+
+  const parasHtml = paras.map(p => `<p>${p}</p>`).join('');
+  const tagsHtml = tags.map(t => `<span class="rec-tag">${t}</span>`).join('');
+  const queryHtml = book
+    ? `<p style="font-family:var(--body);font-size:13px;color:var(--ink-muted);font-style:italic;margin-bottom:1.5rem;">Based on: "${book}"</p>`
+    : '';
+
+  document.getElementById('shareContent').innerHTML = `
+    ${queryHtml}
+    <div class="rec-body">${parasHtml}</div>
+    ${tagsHtml ? `<div class="rec-tags" style="margin-top:1.5rem;">${tagsHtml}</div>` : ''}
+  `;
+</script>
+</body>
+</html>
